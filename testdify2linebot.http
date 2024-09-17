@@ -1,0 +1,6 @@
+@testdify2linebot_HostAddress = http://localhost:5056
+
+GET {{testdify2linebot_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
