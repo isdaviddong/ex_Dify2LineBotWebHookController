@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,9 +13,9 @@ namespace isRock.Template
 {
     public class Dify2LineBotWebHookController : isRock.LineBot.LineWebHookControllerBase
     {
-        const string DifyAPIKey = "👉app_f0Bn____________x1v"; //👉repleace it with your Dify AI key
-        const string adminUserId = "👉U52______________________30"; //👉repleace it with your Admin User Id
-        const string channelAccessToken = "👉PZamXoS6ecMPVEq____________Ma2kmvXsPlFU="; //👉repleace it with your Channel Access Token
+        string DifyAPIKey = "👉app_f0Bn____________x1v"; //👉repleace it with your Dify AI key
+        string adminUserId = "👉U52______________________30"; //👉repleace it with your Admin User Id
+        string channelAccessToken = "👉PZamXoS6ecMPVEq____________Ma2kmvXsPlFU="; //👉repleace it with your Channel Access Token
 
         private readonly CacheService _cacheService;
 
@@ -28,6 +28,17 @@ namespace isRock.Template
         [HttpPost]
         public IActionResult POST()
         {
+            //如果有需要，可以透過 QueryString 傳入 DifyAPIKey, adminUserId, channelAccessToken
+            if (Request.Query.ContainsKey("DifyAPIKey"))
+                DifyAPIKey = Request.Query["DifyAPIKey"].ToString();
+            if (Request.Query.ContainsKey("adminUserId"))
+                adminUserId = Request.Query["adminUserId"].ToString();
+            if (Request.Query.ContainsKey("channelAccessToken"))
+            {
+                channelAccessToken = Request.Query["channelAccessToken"].ToString();
+                channelAccessToken = channelAccessToken.Replace(" ", "+");
+                channelAccessToken = channelAccessToken.Trim();
+            }
 
             try
             {
