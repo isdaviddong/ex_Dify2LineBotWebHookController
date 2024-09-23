@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace isRock.Template
@@ -23,6 +23,8 @@ namespace isRock.Template
             var response = client.PostAsync(apiUrl, content).Result;
             // 取得 HTTP response 內容
             var responseContent = response.Content.ReadAsStringAsync().Result;
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                throw new System.Exception($"API回應錯誤：{responseContent}");
             var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(responseContent);
             return obj;
         }
